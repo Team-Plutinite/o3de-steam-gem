@@ -1,0 +1,18 @@
+{
+    "Amazon": {
+        "AssetProcessor": {
+            "Settings": {
+                "ScanFolder SteamAPI/Assets": {
+                    "watch": "@GEMROOT:SteamAPI@/Assets",
+                    "recursive": 1,
+                    "order": 101
+                },
+                "ScanFolder SteamAPI/Registry": {
+                    "watch": "@GEMROOT:SteamAPI@/Registry",
+                    "recursive": 1,
+                    "order": 102
+                }
+            }
+        }
+    }
+}
