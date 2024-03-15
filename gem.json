@@ -1,28 +1,30 @@
 {
-    "gem_name": "SteamAPI",
+    "gem_name": "Steamworks",
     "version": "1.0.0",
-    "display_name": "SteamAPI",
+    "display_name": "Steamworks 1.0.0",
     "license": "MIT",
     "license_url": "https://github.com/Team-Plutinite/o3de-steam-gem/blob/main/LICENSE",
     "origin": "Team Plutinite",
     "origin_url": "https://github.com/Team-Plutinite/o3de-steam-gem",
     "type": "Code",
-    "summary": "Implementation of Steam's API for O3DE",
+    "summary": "Provides an integration of the Steamworks API for developers to publish games made with O3DE on Steam",
     "canonical_tags": [
         "Gem"
     ],
     "user_tags": [
-        "SteamAPI"
+        "SteamAPI",
+        "Steam",
+        "Steamworks"
     ],
     "platforms": [
         ""
     ],
     "icon_path": "preview.png",
-    "requirements": "Requires you to download the Steam API from Steamworks",
-    "documentation_url": "Link to any documentation of your Gem",
+    "requirements": "Requires you to download the Steamworks SDK from Steamworks",
+    "documentation_url": "https://github.com/Team-Plutinite/o3de-steam-gem",
     "dependencies": [],
     "repo_uri": "",
     "compatible_engines": [],
     "engine_api_dependencies": [],
-    "restricted": "SteamAPI"
+    "restricted": "Steamworks"
 }
