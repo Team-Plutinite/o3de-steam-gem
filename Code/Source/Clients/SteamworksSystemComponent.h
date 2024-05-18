@@ -3,17 +3,17 @@
 
 #include <AzCore/Component/Component.h>
 #include <AzCore/Component/TickBus.h>
-#include <SteamAPI/SteamAPIBus.h>
+#include <Steamworks/SteamworksBus.h>
 
-namespace SteamAPI
+namespace Steamworks
 {
-    class SteamAPISystemComponent
+    class SteamworksSystemComponent
         : public AZ::Component
-        , protected SteamAPIRequestBus::Handler
+        , protected SteamworksRequestBus::Handler
         , public AZ::TickBus::Handler
     {
     public:
-        AZ_COMPONENT_DECL(SteamAPISystemComponent);
+        AZ_COMPONENT_DECL(SteamworksSystemComponent);
 
         static void Reflect(AZ::ReflectContext* context);
 
@@ -22,12 +22,12 @@ namespace SteamAPI
         static void GetRequiredServices(AZ::ComponentDescriptor::DependencyArrayType& required);
         static void GetDependentServices(AZ::ComponentDescriptor::DependencyArrayType& dependent);
 
-        SteamAPISystemComponent();
-        ~SteamAPISystemComponent();
+        SteamworksSystemComponent();
+        ~SteamworksSystemComponent();
 
     protected:
         ////////////////////////////////////////////////////////////////////////
-        // SteamAPIRequestBus interface implementation
+        // SteamworksRequestBus interface implementation
 
         ////////////////////////////////////////////////////////////////////////
 
@@ -44,4 +44,4 @@ namespace SteamAPI
         ////////////////////////////////////////////////////////////////////////
     };
 
-} // namespace SteamAPI
+} // namespace Steamworks

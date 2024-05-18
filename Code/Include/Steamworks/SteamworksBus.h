@@ -1,22 +1,22 @@
 
 #pragma once
 
-#include <SteamAPI/SteamAPITypeIds.h>
+#include <Steamworks/SteamworksTypeIds.h>
 
 #include <AzCore/EBus/EBus.h>
 #include <AzCore/Interface/Interface.h>
 
-namespace SteamAPI
+namespace Steamworks
 {
-    class SteamAPIRequests
+    class SteamworksRequests
     {
     public:
-        AZ_RTTI(SteamAPIRequests, SteamAPIRequestsTypeId);
-        virtual ~SteamAPIRequests() = default;
+        AZ_RTTI(SteamworksRequests, SteamworksRequestsTypeId);
+        virtual ~SteamworksRequests() = default;
         // Put your public methods here
     };
 
-    class SteamAPIBusTraits
+    class SteamworksBusTraits
         : public AZ::EBusTraits
     {
     public:
@@ -27,7 +27,7 @@ namespace SteamAPI
         //////////////////////////////////////////////////////////////////////////
     };
 
-    using SteamAPIRequestBus = AZ::EBus<SteamAPIRequests, SteamAPIBusTraits>;
-    using SteamAPIInterface = AZ::Interface<SteamAPIRequests>;
+    using SteamworksRequestBus = AZ::EBus<SteamworksRequests, SteamworksBusTraits>;
+    using SteamworksInterface = AZ::Interface<SteamworksRequests>;
 
-} // namespace SteamAPI
+} // namespace Steamworks

@@ -1,25 +1,25 @@
 
-#include <SteamAPI/SteamAPITypeIds.h>
-#include <SteamAPIModuleInterface.h>
-#include "SteamAPIEditorSystemComponent.h"
+#include <Steamworks/SteamworksTypeIds.h>
+#include <SteamworksModuleInterface.h>
+#include "SteamworksEditorSystemComponent.h"
 
-namespace SteamAPI
+namespace Steamworks
 {
-    class SteamAPIEditorModule
-        : public SteamAPIModuleInterface
+    class SteamworksEditorModule
+        : public SteamworksModuleInterface
     {
     public:
-        AZ_RTTI(SteamAPIEditorModule, SteamAPIEditorModuleTypeId, SteamAPIModuleInterface);
-        AZ_CLASS_ALLOCATOR(SteamAPIEditorModule, AZ::SystemAllocator);
+        AZ_RTTI(SteamworksEditorModule, SteamworksEditorModuleTypeId, SteamworksModuleInterface);
+        AZ_CLASS_ALLOCATOR(SteamworksEditorModule, AZ::SystemAllocator);
 
-        SteamAPIEditorModule()
+        SteamworksEditorModule()
         {
             // Push results of [MyComponent]::CreateDescriptor() into m_descriptors here.
             // Add ALL components descriptors associated with this gem to m_descriptors.
             // This will associate the AzTypeInfo information for the components with the the SerializeContext, BehaviorContext and EditContext.
             // This happens through the [MyComponent]::Reflect() function.
             m_descriptors.insert(m_descriptors.end(), {
-                SteamAPIEditorSystemComponent::CreateDescriptor(),
+                SteamworksEditorSystemComponent::CreateDescriptor(),
             });
         }
 
@@ -30,14 +30,14 @@ namespace SteamAPI
         AZ::ComponentTypeList GetRequiredSystemComponents() const override
         {
             return AZ::ComponentTypeList {
-                azrtti_typeid<SteamAPIEditorSystemComponent>(),
+                azrtti_typeid<SteamworksEditorSystemComponent>(),
             };
         }
     };
-}// namespace SteamAPI
+}// namespace Steamworks
 
 #if defined(O3DE_GEM_NAME)
-AZ_DECLARE_MODULE_CLASS(AZ_JOIN(Gem_, O3DE_GEM_NAME, _Editor), SteamAPI::SteamAPIEditorModule)
+AZ_DECLARE_MODULE_CLASS(AZ_JOIN(Gem_, O3DE_GEM_NAME, _Editor), Steamworks::SteamworksEditorModule)
 #else
-AZ_DECLARE_MODULE_CLASS(Gem_SteamAPI_Editor, SteamAPI::SteamAPIEditorModule)
+AZ_DECLARE_MODULE_CLASS(Gem_Steamworks_Editor, Steamworks::SteamworksEditorModule)
 #endif

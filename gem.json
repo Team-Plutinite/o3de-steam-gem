@@ -26,5 +26,6 @@
     "repo_uri": "",
     "compatible_engines": [],
     "engine_api_dependencies": [],
-    "restricted": "Steamworks"
+    "restricted": "Steamworks",
+    "external_subdirectories": []
 }

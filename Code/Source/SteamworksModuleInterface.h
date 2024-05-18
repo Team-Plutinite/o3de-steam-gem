@@ -4,21 +4,21 @@
 #include <AzCore/RTTI/RTTIMacros.h>
 #include <AzCore/RTTI/TypeInfoSimple.h>
 
-namespace SteamAPI
+namespace Steamworks
 {
-    class SteamAPIModuleInterface
+    class SteamworksModuleInterface
         : public AZ::Module
     {
     public:
-        AZ_TYPE_INFO_WITH_NAME_DECL(SteamAPIModuleInterface)
+        AZ_TYPE_INFO_WITH_NAME_DECL(SteamworksModuleInterface)
         AZ_RTTI_NO_TYPE_INFO_DECL()
         AZ_CLASS_ALLOCATOR_DECL
 
-        SteamAPIModuleInterface();
+        SteamworksModuleInterface();
 
         /**
          * Add required SystemComponents to the SystemEntity.
          */
         AZ::ComponentTypeList GetRequiredSystemComponents() const override;
     };
-}// namespace SteamAPI
+}// namespace Steamworks

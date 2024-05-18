@@ -3,23 +3,23 @@
 
 #include <AzToolsFramework/API/ToolsApplicationAPI.h>
 
-#include <Clients/SteamAPISystemComponent.h>
+#include <Clients/SteamworksSystemComponent.h>
 
-namespace SteamAPI
+namespace Steamworks
 {
-    /// System component for SteamAPI editor
-    class SteamAPIEditorSystemComponent
-        : public SteamAPISystemComponent
+    /// System component for Steamworks editor
+    class SteamworksEditorSystemComponent
+        : public SteamworksSystemComponent
         , protected AzToolsFramework::EditorEvents::Bus::Handler
     {
-        using BaseSystemComponent = SteamAPISystemComponent;
+        using BaseSystemComponent = SteamworksSystemComponent;
     public:
-        AZ_COMPONENT_DECL(SteamAPIEditorSystemComponent);
+        AZ_COMPONENT_DECL(SteamworksEditorSystemComponent);
 
         static void Reflect(AZ::ReflectContext* context);
 
-        SteamAPIEditorSystemComponent();
-        ~SteamAPIEditorSystemComponent();
+        SteamworksEditorSystemComponent();
+        ~SteamworksEditorSystemComponent();
 
     private:
         static void GetProvidedServices(AZ::ComponentDescriptor::DependencyArrayType& provided);
@@ -31,4 +31,4 @@ namespace SteamAPI
         void Activate() override;
         void Deactivate() override;
     };
-} // namespace SteamAPI
+} // namespace Steamworks

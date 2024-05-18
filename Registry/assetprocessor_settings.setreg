@@ -2,13 +2,13 @@
     "Amazon": {
         "AssetProcessor": {
             "Settings": {
-                "ScanFolder SteamAPI/Assets": {
-                    "watch": "@GEMROOT:SteamAPI@/Assets",
+                "ScanFolder Steamworks/Assets": {
+                    "watch": "@GEMROOT:Steamworks@/Assets",
                     "recursive": 1,
                     "order": 101
                 },
-                "ScanFolder SteamAPI/Registry": {
-                    "watch": "@GEMROOT:SteamAPI@/Registry",
+                "ScanFolder Steamworks/Registry": {
+                    "watch": "@GEMROOT:Steamworks@/Registry",
                     "recursive": 1,
                     "order": 102
                 }
