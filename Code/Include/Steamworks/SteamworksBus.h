@@ -1,10 +1,10 @@
-
 #pragma once
 
 #include <Steamworks/SteamworksTypeIds.h>
 
 #include <AzCore/EBus/EBus.h>
 #include <AzCore/Interface/Interface.h>
+
 
 namespace Steamworks
 {
@@ -14,6 +14,18 @@ namespace Steamworks
         AZ_RTTI(SteamworksRequests, SteamworksRequestsTypeId);
         virtual ~SteamworksRequests() = default;
         // Put your public methods here
+        
+        // steamuserstats Requests
+        // Prefacing everything with SR_ ("Steamworks Requests") to make sure no steam_api or etc conflicts
+        // Achievements (currently the only thing supported because our game only uses achievements)
+        virtual bool SR_RequestCurrentStats() = 0;
+        //virtual bool GetAchievement(const char *name, bool *achieved) = 0;
+        virtual bool SR_SetAchievement(const char *name) = 0;
+        //virtual bool ClearAchievement(const char *name) = 0;
+        //virtual bool GetAchievementProgressLimitsInt32(const char *name, int32 *minProgress, int32 *maxProgress) = 0;
+        //virtual bool GetAchievementProgressLimitsFloat(const char *name, float *minProgress, float *maxProgress) = 0;
+
+        static void Reflect(AZ::ReflectContext* context);
     };
 
     class SteamworksBusTraits

@@ -5,6 +5,8 @@
 #include <AzCore/Component/TickBus.h>
 #include <Steamworks/SteamworksBus.h>
 
+#include "Steam/sdk/public/steam/steam_api.h"
+
 namespace Steamworks
 {
     class SteamworksSystemComponent
@@ -25,6 +27,20 @@ namespace Steamworks
         SteamworksSystemComponent();
         ~SteamworksSystemComponent();
 
+        STEAM_CALLBACK(SteamworksSystemComponent, OnUserStatsReceived, UserStatsReceived_t, m_CallbackUserStatsReceived);
+        STEAM_CALLBACK(SteamworksSystemComponent, OnAchievementStored, UserAchievementStored_t, m_CallbackAchievementStored);
+
+        struct SteamAchievement {
+            int m_eAchievementID;
+            const char* m_pchAchievementID;
+            char m_rgchName[128];
+            char m_rgchDescription[256];
+            bool m_bAchieved;
+            int m_iIconImage;
+        };
+
+        
+
     protected:
         ////////////////////////////////////////////////////////////////////////
         // SteamworksRequestBus interface implementation
@@ -42,6 +58,21 @@ namespace Steamworks
         // AZTickBus interface implementation
         void OnTick(float deltaTime, AZ::ScriptTimePoint time) override;
         ////////////////////////////////////////////////////////////////////////
+
+        bool steamAPIInitialized;
+        bool requestStatsInitialized;
+
+        uint64 appId;
+        ISteamUser* m_pSteamUser;
+        ISteamUserStats* m_pSteamUserStats;
+
+        // SteamworksRequestBus::Handler interface implementation
+        bool SR_RequestCurrentStats() override;
+        //bool GetAchievement(const char* name, bool* achieved) override;
+        bool SR_SetAchievement(const char* name) override;
+        //bool ClearAchievement(const char* name) override;
+        //bool GetAchievementProgressLimitsInt32(const char* name, int32* minProgress, int32* maxProgress) override;
+        //bool GetAchievementProgressLimitsFloat(const char* name, float* minProgress, float* maxProgress) override;
     };
 
 } // namespace Steamworks

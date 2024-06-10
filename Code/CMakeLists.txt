@@ -71,6 +71,36 @@ ly_add_target(
             Gem::${gem_name}.Private.Object
 )
 
+
+# Linking in steam SDK (steam_api64.lib and steam_api64.dll)
+# Currently I have only the 64-bit version of the steam SDK in as our project is 64-bit and I have no way to test any other version.
+# Anyone who is working with macOS, linux, etc. please feel free to do so
+# I am also not super familiar with cmake so if there is a better way to do this feel free to change it
+set(STEAM_SDK_DIR "${gem_path}/Code/Include/Steam/sdk")
+set(STEAM_SDK_LIB_DIR "${STEAM_SDK_DIR}/redistributable_bin/win64")
+set(STEAM_SDK_INCLUDE_DIR "${STEAM_SDK_DIR}/public")
+link_directories(${STEAM_SDK_LIB_DIR})
+target_include_directories(${gem_name} PUBLIC ${STEAM_SDK_INCLUDE_DIR})
+if (NOT EXISTS "${STEAM_SDK_LIB_DIR}/steam_api64.lib" AND NOT EXISTS "${STEAM_SDK_LIB_DIR}/steam_api64.dll")
+	message(FATAL_ERROR "steam_api64.lib and steam_api64.dll not found in ${STEAM_SDK_LIB_DIR}. Please make sure the Steam SDK is downloaded from Steamworks and placed in the right place.")
+endif()
+if (NOT EXISTS "${STEAM_SDK_LIB_DIR}/steam_api64.lib")
+	message(FATAL_ERROR "steam_api64.lib not found in ${STEAM_SDK_LIB_DIR}.")
+endif()
+# The lib exists. Link it
+target_link_libraries(${gem_name} PUBLIC "${STEAM_SDK_LIB_DIR}/steam_api64.lib")
+#message(STATUS "steam_api64.lib found and linked")
+if(NOT EXISTS "${STEAM_SDK_LIB_DIR}/steam_api64.dll")
+	message(FATAL_ERROR "steam_api64.dll not found in ${STEAM_SDK_LIB_DIR}. Ensure its in the same directory as the executable")
+endif()
+# Copy the dll to the output directory
+add_custom_command(TARGET ${gem_name} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy_if_different
+    "${STEAM_SDK_LIB_DIR}/steam_api64.dll"
+    "$<TARGET_FILE_DIR:${gem_name}>/steam_api64.dll"
+)
+
+
 # Include the gem name into the Client Module source file
 # for use with the AZ_DECLARE_MODULE_CLASS macro
 # This is to allow renaming of the gem to also cause
@@ -136,6 +166,8 @@ if(PAL_TRAIT_BUILD_HOST_TOOLS)
                 AZ::AzToolsFramework
                 $<TARGET_OBJECTS:Gem::${gem_name}.Private.Object>
     )
+    
+    #target_link_libraries(${gem_name}.Editor.Private.Object PRIVATE "${STEAM_SDK_LIB_DIR}/steam_api64.lib")
 
     ly_add_target(
         NAME ${gem_name}.Editor GEM_MODULE
@@ -154,6 +186,21 @@ if(PAL_TRAIT_BUILD_HOST_TOOLS)
             PRIVATE
                 Gem::${gem_name}.Editor.Private.Object
     )
+    
+    link_directories(${STEAM_SDK_LIB_DIR})
+    target_include_directories(${gem_name}.Editor PRIVATE ${STEAM_SDK_INCLUDE_DIR})
+    if (NOT EXISTS "${STEAM_SDK_LIB_DIR}/steam_api64.lib" AND NOT EXISTS "${STEAM_SDK_LIB_DIR}/steam_api64.dll")
+	    message(FATAL_ERROR "steam_api64.lib and steam_api64.dll not found in ${STEAM_SDK_LIB_DIR}. Please make sure the Steam SDK is downloaded from Steamworks and placed in the right place.")
+    endif()
+    if (NOT EXISTS "${STEAM_SDK_LIB_DIR}/steam_api64.lib")
+	    message(FATAL_ERROR "steam_api64.lib not found in ${STEAM_SDK_LIB_DIR}.")
+    endif()
+    # The lib exists. Link it
+    target_link_libraries(${gem_name}.Editor PRIVATE "${STEAM_SDK_LIB_DIR}/steam_api64.lib")
+    #message(STATUS "steam_api64.lib found and linked")
+    if(NOT EXISTS "${STEAM_SDK_LIB_DIR}/steam_api64.dll")
+	    message(FATAL_ERROR "steam_api64.dll not found in ${STEAM_SDK_LIB_DIR}. Ensure its in the same directory as the executable")
+    endif()
 
     # Include the gem name into the Editor Module source file
     # for use with the AZ_DECLARE_MODULE_CLASS macro

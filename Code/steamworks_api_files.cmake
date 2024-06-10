@@ -2,4 +2,49 @@
 set(FILES
     Include/Steamworks/SteamworksBus.h
     Include/Steamworks/SteamworksTypeIds.h
+    Include/Steam/sdk/public/steam/isteamapps.h
+    Include/Steam/sdk/public/steam/isteamappticket.h
+    Include/Steam/sdk/public/steam/isteamclient.h
+    Include/Steam/sdk/public/steam/isteamcontroller.h
+    Include/Steam/sdk/public/steam/isteamdualsense.h
+    Include/Steam/sdk/public/steam/isteamfriends.h
+    Include/Steam/sdk/public/steam/isteamgamecoordinator.h
+    Include/Steam/sdk/public/steam/isteamgameserver.h
+    Include/Steam/sdk/public/steam/isteamgameserverstats.h
+    Include/Steam/sdk/public/steam/isteamhtmlsurface.h
+    Include/Steam/sdk/public/steam/isteamhttp.h
+    Include/Steam/sdk/public/steam/isteaminput.h
+    Include/Steam/sdk/public/steam/isteaminventory.h
+    Include/Steam/sdk/public/steam/isteammatchmaking.h
+    Include/Steam/sdk/public/steam/isteammusic.h
+    Include/Steam/sdk/public/steam/isteammusicremote.h
+    Include/Steam/sdk/public/steam/isteamnetworking.h
+    Include/Steam/sdk/public/steam/isteamnetworkingmessages.h
+    Include/Steam/sdk/public/steam/isteamnetworkingsockets.h
+    Include/Steam/sdk/public/steam/isteamnetworkingutils.h
+    Include/Steam/sdk/public/steam/isteamparentalsettings.h
+    Include/Steam/sdk/public/steam/isteamps3overlayrenderer.h
+    Include/Steam/sdk/public/steam/isteamremoteplay.h
+    Include/Steam/sdk/public/steam/isteamremotestorage.h
+    Include/Steam/sdk/public/steam/isteamscreenshots.h
+    Include/Steam/sdk/public/steam/isteamugc.h
+    Include/Steam/sdk/public/steam/isteamuser.h
+    Include/Steam/sdk/public/steam/isteamuserstats.h
+    Include/Steam/sdk/public/steam/isteamutils.h
+    Include/Steam/sdk/public/steam/isteamvideo.h
+    Include/Steam/sdk/public/steam/matchmakingtypes.h
+    Include/Steam/sdk/public/steam/steam_api.h
+    Include/Steam/sdk/public/steam/steam_api.json
+    Include/Steam/sdk/public/steam/steam_api_common.h
+    Include/Steam/sdk/public/steam/steam_api_flat.h
+    Include/Steam/sdk/public/steam/steam_api_internal.h
+    Include/Steam/sdk/public/steam/steam_gameserver.h
+    Include/Steam/sdk/public/steam/steamclientpublic.h
+    Include/Steam/sdk/public/steam/steamencryptedappticket.h
+    Include/Steam/sdk/public/steam/steamhttpenums.h
+    Include/Steam/sdk/public/steam/steamnetworkingfakeip.h
+    Include/Steam/sdk/public/steam/steamnetworkingtypes.h
+    Include/Steam/sdk/public/steam/steamps3params.h
+    Include/Steam/sdk/public/steam/steamtypes.h
+    Include/Steam/sdk/public/steam/steamuniverse.h
 )
