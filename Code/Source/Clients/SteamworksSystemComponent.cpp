@@ -27,7 +27,7 @@ namespace Steamworks
     */
     void SteamworksSystemComponent::Reflect(AZ::ReflectContext* context)
     {
-        AZ_Printf("Steamworks System Component", "Reflect Called")
+        //AZ_Printf("Steamworks System Component", "Reflect Called")
         if (auto serializeContext = azrtti_cast<AZ::SerializeContext*>(context))
         {
             serializeContext->Class<SteamworksSystemComponent, AZ::Component>()
