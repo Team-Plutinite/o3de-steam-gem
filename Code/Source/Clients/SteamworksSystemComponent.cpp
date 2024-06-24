@@ -119,7 +119,7 @@ namespace Steamworks
         // or edit the line directly below this to set the appId manually (probably good to do this anyway, but I'm not your boss).
         
         //appId = (your app id here);
-        SteamAPI_RestartAppIfNecessary(uint32(appId));
+        SteamAPI_RestartAppIfNecessary(uint64(appId));
 #endif 
         AZ::TickBus::Handler::BusConnect();
     }
