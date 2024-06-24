@@ -39,7 +39,7 @@ namespace Steamworks
             //}
             
         }
-        AZ_Printf("Steamworks System Component", "Steamworks Requests Reflect Called")
+        //AZ_Printf("Steamworks System Component", "Steamworks Requests Reflect Called")
         if (AZ::BehaviorContext* behaviorContext = azrtti_cast<AZ::BehaviorContext*>(context)) {
             AZ_Printf("Steamworks System Component", "Reflecting Steamworks Requests");
             behaviorContext->EBus<SteamworksRequestBus>("Steamworks Requests")
