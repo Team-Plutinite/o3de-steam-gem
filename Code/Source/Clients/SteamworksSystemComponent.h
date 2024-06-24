@@ -62,7 +62,7 @@ namespace Steamworks
         bool steamAPIInitialized;
         bool requestStatsInitialized;
 
-        uint64 appId;
+        uint32 appId;
         ISteamUser* m_pSteamUser;
         ISteamUserStats* m_pSteamUserStats;
 
