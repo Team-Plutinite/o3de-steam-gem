@@ -33,7 +33,6 @@ namespace Steamworks
         virtual CSteamID SR_GetSteamID() = 0;
         virtual uint64 SR_GetAccountID() = 0;
 
-
         static void Reflect(AZ::ReflectContext* context);
     };
 

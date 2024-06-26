@@ -11,20 +11,7 @@ namespace Steamworks
 {
     AZ_COMPONENT_IMPL(SteamworksSystemComponent, "SteamworksSystemComponent",
         SteamworksSystemComponentTypeId);
-   /*
-    void SteamworksRequests::Reflect(AZ::ReflectContext* context) {
-        AZ_Printf("Steamworks System Component", "Steamworks Requests Reflect Called")
-        if (AZ::BehaviorContext* behaviorContext = azrtti_cast<AZ::BehaviorContext*>(context)) {
-           AZ_Printf("Steamworks System Component", "Reflecting Steamworks Requests");
-           behaviorContext->EBus<SteamworksRequestBus>("Steamworks Requests")
-                ->Attribute(AZ::Script::Attributes::Category, "Steamworks/Steam User Stats")
-                ->Attribute(AZ::Script::Attributes::Scope, AZ::Script::Attributes::ScopeFlags::Common)
-                ->Event("RequestCurrentStats", &SteamworksRequestBus::Events::RequestCurrentStats)
-                ->Event("SetAchievement", &SteamworksRequestBus::Events::SetAchievement);
-            AZ_Printf("Steamworks System Component", "Reflected Steamworks Requests")
-        }
-    }
-    */
+   
     void SteamworksSystemComponent::Reflect(AZ::ReflectContext* context)
     {
         //AZ_Printf("Steamworks System Component", "Reflect Called")
@@ -32,11 +19,6 @@ namespace Steamworks
         {
             serializeContext->Class<SteamworksSystemComponent, AZ::Component>()
                 ->Version(1);
-
-            //if (AZ::EditContext* ec = serializeContext->GetEditContext()) {
-            //    ec->Class<SteamworksSystemComponent>("Steamworks", "Steamworks System Component")
-            //        ->ClassElement(AZ::Edit::ClassElements::EditorData, "");
-            //}
             
         }
         //AZ_Printf("Steamworks System Component", "Steamworks Requests Reflect Called")
@@ -52,8 +34,6 @@ namespace Steamworks
                 ->Event("SteamInitialized", &SteamworksRequestBus::Events::SR_SteamInitialized);
             AZ_Printf("Steamworks System Component", "Reflected Steamworks Requests")
         }
-        //SteamworksRequestBus::Handler::Reflect(context);
-        //SteamworksRequests::Reflect(context);
     }
 
     
@@ -165,7 +145,7 @@ namespace Steamworks
         else {
             AZ_Printf("Steamworks System Component", "Failed to get Steam ID. Stats not initialized");
         }
-        return;
+        return CSteamID();
     }
     uint64 SteamworksSystemComponent::SR_GetAccountID() {
         if (requestStatsInitialized) {
@@ -174,7 +154,7 @@ namespace Steamworks
 		else {
 			AZ_Printf("Steamworks System Component", "Failed to get Account ID. Stats not initialized");
         }
-        return false
+        return 0;
 	}
     bool SteamworksSystemComponent::SR_SteamInitialized() {
         return requestStatsInitialized;
