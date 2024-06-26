@@ -46,7 +46,10 @@ namespace Steamworks
                 ->Attribute(AZ::Script::Attributes::Category, "Steamworks/Steam User Stats")
                 ->Attribute(AZ::Script::Attributes::Scope, AZ::Script::Attributes::ScopeFlags::Common)
                 ->Event("RequestCurrentStats", &SteamworksRequestBus::Events::SR_RequestCurrentStats)
-                ->Event("SetAchievement", &SteamworksRequestBus::Events::SR_SetAchievement);
+                ->Event("SetAchievement", &SteamworksRequestBus::Events::SR_SetAchievement)
+                ->Event("GetSteamID", &SteamworksRequestBus::Events::SR_GetSteamID)
+                ->Event("GetAccountID", &SteamworksRequestBus::Events::SR_GetAccountID)
+                ->Event("SteamInitialized", &SteamworksRequestBus::Events::SR_SteamInitialized);
             AZ_Printf("Steamworks System Component", "Reflected Steamworks Requests")
         }
         //SteamworksRequestBus::Handler::Reflect(context);
@@ -153,6 +156,28 @@ namespace Steamworks
 			AZ_Printf("Steamworks System Component", "Failed to set achievement %s. Stats not initialized", name);
 		}
         return false;
+    }
+    
+    CSteamID SteamworksSystemComponent::SR_GetSteamID() {
+        if (requestStatsInitialized) {
+            return m_pSteamUser->GetSteamID();
+        }
+        else {
+            AZ_Printf("Steamworks System Component", "Failed to get Steam ID. Stats not initialized");
+        }
+        return;
+    }
+    uint64 SteamworksSystemComponent::SR_GetAccountID() {
+        if (requestStatsInitialized) {
+		    return m_pSteamUser->GetSteamID().ConvertToUint64();
+		}
+		else {
+			AZ_Printf("Steamworks System Component", "Failed to get Account ID. Stats not initialized");
+        }
+        return false
+	}
+    bool SteamworksSystemComponent::SR_SteamInitialized() {
+        return requestStatsInitialized;
     }
 
     void SteamworksSystemComponent::OnUserStatsReceived(UserStatsReceived_t* pCallback) {
