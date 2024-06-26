@@ -73,8 +73,7 @@ namespace Steamworks
         //bool ClearAchievement(const char* name) override;
         //bool GetAchievementProgressLimitsInt32(const char* name, int32* minProgress, int32* maxProgress) override;
         //bool GetAchievementProgressLimitsFloat(const char* name, float* minProgress, float* maxProgress) override;
-        CSteamID SR_GetSteamID() override;
-        uint64 SR_GetAccountID() override;
+        unsigned long long SR_GetAccountID() override;
         bool SR_SteamInitialized() override;
     };
 

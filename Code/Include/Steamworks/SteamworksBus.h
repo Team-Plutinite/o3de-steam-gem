@@ -30,8 +30,7 @@ namespace Steamworks
         virtual bool SR_SteamInitialized() = 0;
 
         //steamuser Requests
-        virtual CSteamID SR_GetSteamID() = 0;
-        virtual uint64 SR_GetAccountID() = 0;
+        virtual unsigned long long SR_GetAccountID() = 0;
 
         static void Reflect(AZ::ReflectContext* context);
     };

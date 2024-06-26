@@ -29,7 +29,6 @@ namespace Steamworks
                 ->Attribute(AZ::Script::Attributes::Scope, AZ::Script::Attributes::ScopeFlags::Common)
                 ->Event("RequestCurrentStats", &SteamworksRequestBus::Events::SR_RequestCurrentStats)
                 ->Event("SetAchievement", &SteamworksRequestBus::Events::SR_SetAchievement)
-                ->Event("GetSteamID", &SteamworksRequestBus::Events::SR_GetSteamID)
                 ->Event("GetAccountID", &SteamworksRequestBus::Events::SR_GetAccountID)
                 ->Event("SteamInitialized", &SteamworksRequestBus::Events::SR_SteamInitialized);
             AZ_Printf("Steamworks System Component", "Reflected Steamworks Requests")
@@ -137,17 +136,8 @@ namespace Steamworks
 		}
         return false;
     }
-    
-    CSteamID SteamworksSystemComponent::SR_GetSteamID() {
-        if (requestStatsInitialized) {
-            return m_pSteamUser->GetSteamID();
-        }
-        else {
-            AZ_Printf("Steamworks System Component", "Failed to get Steam ID. Stats not initialized");
-        }
-        return CSteamID();
-    }
-    uint64 SteamworksSystemComponent::SR_GetAccountID() {
+
+    unsigned long long SteamworksSystemComponent::SR_GetAccountID() {
         if (requestStatsInitialized) {
 		    return m_pSteamUser->GetSteamID().ConvertToUint64();
 		}
@@ -156,6 +146,7 @@ namespace Steamworks
         }
         return 0;
 	}
+
     bool SteamworksSystemComponent::SR_SteamInitialized() {
         return requestStatsInitialized;
     }
