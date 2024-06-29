@@ -65,6 +65,7 @@ namespace Steamworks
         uint32 appId;
         ISteamUser* m_pSteamUser;
         ISteamUserStats* m_pSteamUserStats;
+        ISteamFriends* m_pSteamFriends;
 
         // SteamworksRequestBus::Handler interface implementation
         bool SR_RequestCurrentStats() override;
@@ -75,6 +76,7 @@ namespace Steamworks
         //bool GetAchievementProgressLimitsFloat(const char* name, float* minProgress, float* maxProgress) override;
         unsigned long long SR_GetAccountID() override;
         bool SR_SteamInitialized() override;
+        bool SR_SetRichPresence(const char* pchKey, const char* pchValue) override;
     };
 
 } // namespace Steamworks

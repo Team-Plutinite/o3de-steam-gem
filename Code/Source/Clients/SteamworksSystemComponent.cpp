@@ -23,15 +23,14 @@ namespace Steamworks
         }
         //AZ_Printf("Steamworks System Component", "Steamworks Requests Reflect Called")
         if (AZ::BehaviorContext* behaviorContext = azrtti_cast<AZ::BehaviorContext*>(context)) {
-            AZ_Printf("Steamworks System Component", "Reflecting Steamworks Requests");
             behaviorContext->EBus<SteamworksRequestBus>("Steamworks Requests")
-                ->Attribute(AZ::Script::Attributes::Category, "Steamworks/Steam User Stats")
+                ->Attribute(AZ::Script::Attributes::Category, "Steamworks")
                 ->Attribute(AZ::Script::Attributes::Scope, AZ::Script::Attributes::ScopeFlags::Common)
                 ->Event("RequestCurrentStats", &SteamworksRequestBus::Events::SR_RequestCurrentStats)
                 ->Event("SetAchievement", &SteamworksRequestBus::Events::SR_SetAchievement)
                 ->Event("GetAccountID", &SteamworksRequestBus::Events::SR_GetAccountID)
-                ->Event("SteamInitialized", &SteamworksRequestBus::Events::SR_SteamInitialized);
-            AZ_Printf("Steamworks System Component", "Reflected Steamworks Requests")
+                ->Event("SteamInitialized", &SteamworksRequestBus::Events::SR_SteamInitialized)
+                ->Event("SetRichPresence", &SteamworksRequestBus::Events::SR_SetRichPresence);
         }
     }
 
@@ -93,6 +92,7 @@ namespace Steamworks
             AZ_Printf("Steamworks System Component", "App ID: %d", appId)
             m_pSteamUser = SteamUser();
             m_pSteamUserStats = SteamUserStats();
+            m_pSteamFriends = SteamFriends();
             SteamworksSystemComponent::SR_RequestCurrentStats();
         }
 #ifdef _RELEASE
@@ -146,6 +146,16 @@ namespace Steamworks
         }
         return 0;
 	}
+
+    bool SteamworksSystemComponent::SR_SetRichPresence(const char* pchKey, const char* pchValue) {
+        if (steamAPIInitialized){
+		    return m_pSteamFriends->SetRichPresence(pchKey, pchValue);
+        }
+        else {
+            AZ_Printf("Steamworks System Component", "Failed to set rich presence. Steam API not initialized");
+			return false;
+        }
+    }
 
     bool SteamworksSystemComponent::SR_SteamInitialized() {
         return requestStatsInitialized;

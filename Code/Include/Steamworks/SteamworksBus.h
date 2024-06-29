@@ -32,6 +32,9 @@ namespace Steamworks
         //steamuser Requests
         virtual unsigned long long SR_GetAccountID() = 0;
 
+        //steamfriends Requests
+        virtual bool SR_SetRichPresence(const char* pchKey, const char* pchValue) = 0;
+
         static void Reflect(AZ::ReflectContext* context);
     };
 
