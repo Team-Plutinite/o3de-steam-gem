@@ -149,8 +149,9 @@ namespace Steamworks
 
     bool SteamworksSystemComponent::SR_SetRichPresence(const char* pchKey, const char* pchValue) {
         if (steamAPIInitialized){
-		    return m_pSteamFriends->SetRichPresence(pchKey, pchValue);
             AZ_Printf("Steamworks System Component", "Rich presence set to %s", pchKey);
+            // Commented for SoM testing
+		    //return m_pSteamFriends->SetRichPresence(pchKey, pchValue);
         }
         else {
             AZ_Printf("Steamworks System Component", "Failed to set rich presence. Steam API not initialized");
