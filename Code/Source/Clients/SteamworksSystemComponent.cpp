@@ -152,8 +152,8 @@ namespace Steamworks
             AZ_Printf("Steamworks System Component", "Rich presence key set to %s", pchKey);
             AZ_Printf("Steamworks System Component", "Rich presence value set to %s", pchValue)
             // Commented for SoM testing
-		    //return m_pSteamFriends->SetRichPresence(pchKey, pchValue);
-            return true;
+		    return m_pSteamFriends->SetRichPresence(pchKey, pchValue);
+            //return true;
         }
         else {
             AZ_Printf("Steamworks System Component", "Failed to set rich presence. Steam API not initialized");
