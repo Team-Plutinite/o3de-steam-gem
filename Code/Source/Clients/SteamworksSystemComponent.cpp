@@ -25,12 +25,24 @@ namespace Steamworks
         if (AZ::BehaviorContext* behaviorContext = azrtti_cast<AZ::BehaviorContext*>(context)) {
             behaviorContext->EBus<SteamworksRequestBus>("Steamworks Requests")
                 ->Attribute(AZ::Script::Attributes::Category, "Steamworks")
+                ->Attribute(AZ::Script::Attributes::Scope, AZ::Script::Attributes::ScopeFlags::Common);
+
+            behaviorContext->EBus<SteamUserStatsRequestBus>("SteamUserStats Requests")
+                ->Attribute(AZ::Script::Attributes::Category, "Steamworks/Steam User Stats")
                 ->Attribute(AZ::Script::Attributes::Scope, AZ::Script::Attributes::ScopeFlags::Common)
-                ->Event("RequestCurrentStats", &SteamworksRequestBus::Events::SR_RequestCurrentStats)
-                ->Event("SetAchievement", &SteamworksRequestBus::Events::SR_SetAchievement)
-                ->Event("GetAccountID", &SteamworksRequestBus::Events::SR_GetAccountID)
-                ->Event("SteamInitialized", &SteamworksRequestBus::Events::SR_SteamInitialized)
-                ->Event("SetRichPresence", &SteamworksRequestBus::Events::SR_SetRichPresence);
+                ->Event("RequestCurrentStats", &SteamUserStatsRequestBus::Events::SR_RequestCurrentStats)
+                ->Event("SetAchievement", &SteamUserStatsRequestBus::Events::SR_SetAchievement)
+                ->Event("SteamInitialized", &SteamUserStatsRequestBus::Events::SR_SteamInitialized);
+
+            behaviorContext->EBus<SteamUserRequestBus>("SteamUser Requests")
+                ->Attribute(AZ::Script::Attributes::Category, "Steamworks/Steam User")
+				->Attribute(AZ::Script::Attributes::Scope, AZ::Script::Attributes::ScopeFlags::Common)
+				->Event("GetAccountID", &SteamUserRequestBus::Events::SR_GetAccountID);
+
+			behaviorContext->EBus<SteamFriendsRequestBus>("SteamFriends Requests")
+				->Attribute(AZ::Script::Attributes::Category, "Steamworks/Steam Friends")
+				->Attribute(AZ::Script::Attributes::Scope, AZ::Script::Attributes::ScopeFlags::Common)
+				->Event("SetRichPresence", &SteamFriendsRequestBus::Events::SR_SetRichPresence);
         }
     }
 
@@ -57,6 +69,7 @@ namespace Steamworks
     SteamworksSystemComponent::SteamworksSystemComponent() :
         m_CallbackUserStatsReceived(this, &SteamworksSystemComponent::OnUserStatsReceived),
         m_CallbackAchievementStored(this, &SteamworksSystemComponent::OnAchievementStored),
+        m_CallbackGameOverlayActivated(this, &SteamworksSystemComponent::OnGameOverlayActivated),
         appId(0),
         requestStatsInitialized(false)
     {
@@ -179,11 +192,23 @@ namespace Steamworks
 
     void SteamworksSystemComponent::OnAchievementStored(UserAchievementStored_t* pCallback) {
         if (appId == pCallback->m_nGameID) {
-            if (pCallback->m_nMaxProgress == 0) {
+            if (pCallback->m_nMaxProgress == 0) { // if there is no progress with the achievement, just set it as achieved
                 AZ_Printf("Steamworks System Component", "Achievement %s stored", pCallback->m_rgchAchievementName);
             }
             else {
                 AZ_Printf("Steamworks System Component", "Achievement %s stored with progress %d", pCallback->m_rgchAchievementName, pCallback->m_nCurProgress);
+            }
+        }
+    }
+
+    void SteamworksSystemComponent::OnGameOverlayActivated(GameOverlayActivated_t* pCallback) {
+        if (appId == pCallback->m_nAppID) {
+            if (pCallback->m_bActive) {
+                // user just opened the overlay
+
+            }
+            else if (!pCallback->m_bActive) {
+                // user just closed the overlay
             }
         }
     }
