@@ -9,6 +9,63 @@
 
 namespace Steamworks
 {
+    class SteamUserStatsNotificationBusBehaviorHandler :
+        public SteamUserStatsNotificationBus::Handler,
+        public AZ::BehaviorEBusHandler
+    {
+    public:
+        ~SteamUserStatsNotificationBusBehaviorHandler() override = default;
+
+        AZ_EBUS_BEHAVIOR_BINDER(SteamUserStatsNotificationBusBehaviorHandler, SteamUserStatsNotificationsTypeId,
+            AZ::SystemAllocator,
+            OnUserStatsReceived,
+            OnAchievementStored
+        );
+
+        void OnUserStatsReceived() override {
+        	Call(FN_OnUserStatsReceived);
+        };
+        void OnAchievementStored() override {
+        	Call(FN_OnAchievementStored);
+        };
+
+        static void Reflect(AZ::ReflectContext* context) {
+            if (AZ::BehaviorContext* behaviorContext = azrtti_cast<AZ::BehaviorContext*>(context)) {
+                behaviorContext->EBus<SteamUserStatsNotificationBus>("Steam User Stats Notifications")
+					->Attribute(AZ::Script::Attributes::Category, "Steamworks/Steam User Stats")
+					->Attribute(AZ::Script::Attributes::Scope, AZ::Script::Attributes::ScopeFlags::Common)
+					->Handler<SteamUserStatsNotificationBusBehaviorHandler>();
+            }
+        };
+    };
+
+    class SteamFriendsNotificationBusBehaviorHandler :
+        public SteamFriendsNotificationBus::Handler,
+        public AZ::BehaviorEBusHandler
+    { 
+        public:
+		~SteamFriendsNotificationBusBehaviorHandler() override = default;
+
+		AZ_EBUS_BEHAVIOR_BINDER(SteamFriendsNotificationBusBehaviorHandler, SteamFriendsNotificationsTypeId,
+            			AZ::SystemAllocator,
+            			OnGameOverlayActivated
+        		);
+
+		void OnGameOverlayActivated(bool enabled) override {
+			Call(FN_OnGameOverlayActivated, enabled);
+		};
+
+		static void Reflect(AZ::ReflectContext* context) {
+            if (AZ::BehaviorContext* behaviorContext = azrtti_cast<AZ::BehaviorContext*>(context)) {
+				behaviorContext->EBus<SteamFriendsNotificationBus>("Steam Friends Notifications")
+					->Attribute(AZ::Script::Attributes::Category, "Steamworks/Steam Friends")
+					->Attribute(AZ::Script::Attributes::Scope, AZ::Script::Attributes::ScopeFlags::Common)
+					->Handler<SteamFriendsNotificationBusBehaviorHandler>();
+			}
+		}
+	};
+    
+
     AZ_COMPONENT_IMPL(SteamworksSystemComponent, "SteamworksSystemComponent",
         SteamworksSystemComponentTypeId);
    
@@ -43,6 +100,9 @@ namespace Steamworks
 				->Attribute(AZ::Script::Attributes::Category, "Steamworks/Steam Friends")
 				->Attribute(AZ::Script::Attributes::Scope, AZ::Script::Attributes::ScopeFlags::Common)
 				->Event("SetRichPresence", &SteamFriendsRequestBus::Events::SR_SetRichPresence);
+
+            SteamUserStatsNotificationBusBehaviorHandler::Reflect(context);
+            SteamFriendsNotificationBusBehaviorHandler::Reflect(context);
         }
     }
 
@@ -183,6 +243,7 @@ namespace Steamworks
             if (pCallback->m_eResult == k_EResultOK) {
                 requestStatsInitialized = true;
                 AZ_Printf("Steamworks System Component", "Received stats and achievements from Steam");
+                Steamworks::SteamUserStatsNotificationBus::Broadcast(&Steamworks::SteamUserStatsNotificationBus::Events::OnUserStatsReceived);
             }
             else {
                 AZ_Printf("Steamworks System Component", "Failed to receive stats and achievements from Steam. Error %d", pCallback->m_eResult);
@@ -194,6 +255,7 @@ namespace Steamworks
         if (appId == pCallback->m_nGameID) {
             if (pCallback->m_nMaxProgress == 0) { // if there is no progress with the achievement, just set it as achieved
                 AZ_Printf("Steamworks System Component", "Achievement %s stored", pCallback->m_rgchAchievementName);
+                Steamworks::SteamUserStatsNotificationBus::Broadcast(&Steamworks::SteamUserStatsNotificationBus::Events::OnAchievementStored);
             }
             else {
                 AZ_Printf("Steamworks System Component", "Achievement %s stored with progress %d", pCallback->m_rgchAchievementName, pCallback->m_nCurProgress);
@@ -203,13 +265,7 @@ namespace Steamworks
 
     void SteamworksSystemComponent::OnGameOverlayActivated(GameOverlayActivated_t* pCallback) {
         if (appId == pCallback->m_nAppID) {
-            if (pCallback->m_bActive) {
-                // user just opened the overlay
-
-            }
-            else if (!pCallback->m_bActive) {
-                // user just closed the overlay
-            }
+            Steamworks::SteamFriendsNotificationBus::Broadcast(&Steamworks::SteamFriendsNotificationBus::Events::OnGameOverlayActivated, pCallback->m_bActive);
         }
     }
 

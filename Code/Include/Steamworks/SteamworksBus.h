@@ -4,6 +4,7 @@
 
 #include <AzCore/EBus/EBus.h>
 #include <AzCore/Interface/Interface.h>
+#include <AzCore/RTTI/BehaviorContext.h>
 
 
 namespace Steamworks
@@ -63,6 +64,32 @@ namespace Steamworks
             static void Reflect(AZ::ReflectContext* context);
     };
 
+    class SteamUserStatsNotifications 
+        : public AZ::EBusTraits 
+    {
+        public:
+            virtual ~SteamUserStatsNotifications() = default;
+            static const AZ::EBusHandlerPolicy HandlerPolicy = AZ::EBusHandlerPolicy::Multiple;
+            static const AZ::EBusAddressPolicy AddressPolicy = AZ::EBusAddressPolicy::Single;
+
+            // currently these just ping if it was successful
+            virtual void OnUserStatsReceived() {};
+            virtual void OnAchievementStored() {};
+    };
+
+
+    class SteamFriendsNotifications
+        : public AZ::EBusTraits
+    {
+		public:
+			virtual ~SteamFriendsNotifications() = default;
+			static const AZ::EBusHandlerPolicy HandlerPolicy = AZ::EBusHandlerPolicy::Multiple;
+			static const AZ::EBusAddressPolicy AddressPolicy = AZ::EBusAddressPolicy::Single;
+
+			virtual void OnGameOverlayActivated(bool /*enabled*/) {};
+	};
+
+
     class SteamworksBusTraits
         : public AZ::EBusTraits
     {
@@ -78,6 +105,8 @@ namespace Steamworks
     using SteamUserStatsRequestBus = AZ::EBus<SteamUserStatsRequests, SteamworksBusTraits>;
     using SteamUserRequestBus = AZ::EBus<SteamUserRequests, SteamworksBusTraits>;
     using SteamFriendsRequestBus = AZ::EBus<SteamFriendsRequests, SteamworksBusTraits>;
+    using SteamUserStatsNotificationBus = AZ::EBus<SteamUserStatsNotifications>;
+    using SteamFriendsNotificationBus = AZ::EBus<SteamFriendsNotifications>;
     using SteamworksInterface = AZ::Interface<SteamworksRequests>;
 
 } // namespace Steamworks

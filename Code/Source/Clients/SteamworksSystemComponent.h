@@ -73,7 +73,7 @@ namespace Steamworks
 
         // SteamworksRequestBus::Handler interface implementation
         
-        //SteamUserStatsRequestBus::Handler interface implementation
+        // SteamUserStatsRequestBus::Handler interface implementation
 
         bool SR_RequestCurrentStats() override;
         //bool GetAchievement(const char* name, bool* achieved) override;
@@ -83,11 +83,12 @@ namespace Steamworks
         //bool GetAchievementProgressLimitsFloat(const char* name, float* minProgress, float* maxProgress) override;
         bool SR_SteamInitialized() override;
 
-        //SteamUserRequestBus::Handler interface implementation
+        // SteamUserRequestBus::Handler interface implementation
 
         unsigned long long SR_GetAccountID() override;
 
-        //SteamFriendsRequestBus::handler interface implementation
+        // SteamFriendsRequestBus::handler interface implementation
+
         bool SR_SetRichPresence(const char* pchKey, const char* pchValue) override;
     };
 
