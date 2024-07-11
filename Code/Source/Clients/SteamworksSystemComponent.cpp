@@ -155,6 +155,9 @@ namespace Steamworks
     void SteamworksSystemComponent::Activate()
     {
         SteamworksRequestBus::Handler::BusConnect();
+        SteamUserStatsRequestBus::Handler::BusConnect();
+        SteamUserRequestBus::Handler::BusConnect();
+        SteamFriendsRequestBus::Handler::BusConnect();
 
         // Initialize steam API, and if it initializes, set everything up, get the appID, and request current stats for the user
         steamAPIInitialized = false;
@@ -182,7 +185,11 @@ namespace Steamworks
     void SteamworksSystemComponent::Deactivate()
     {
         AZ::TickBus::Handler::BusDisconnect();
+        SteamFriendsRequestBus::Handler::BusDisconnect();
+        SteamUserRequestBus::Handler::BusDisconnect();
+        SteamUserStatsRequestBus::Handler::BusDisconnect();
         SteamworksRequestBus::Handler::BusDisconnect();
+
         if (steamAPIInitialized) {
 			SteamAPI_Shutdown();
 		}
@@ -202,6 +209,7 @@ namespace Steamworks
         // If a call back has been received, then we can set the achievement
         if (requestStatsInitialized) {
             m_pSteamUserStats->SetAchievement(name);
+            AZ_Printf("Steamworks System Component", "Achievement %s set", name);
             return m_pSteamUserStats->StoreStats();
         }
         else {
