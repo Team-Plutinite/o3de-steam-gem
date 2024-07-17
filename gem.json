@@ -17,7 +17,7 @@
         "Steamworks"
     ],
     "platforms": [
-        ""
+        "Windows"
     ],
     "icon_path": "preview.png",
     "requirements": "Requires you to download the Steamworks SDK from Steamworks",
