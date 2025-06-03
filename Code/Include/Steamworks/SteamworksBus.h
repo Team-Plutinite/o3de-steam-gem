@@ -27,6 +27,8 @@ namespace Steamworks
 			virtual ~SteamUserStatsRequests() = default;
 			// Put your public methods here
             // steamuserstats Requests
+            // Achievements (currently the only thing supported because our game only uses achievements)
+            virtual bool SR_RequestCurrentStats() = 0;
             //virtual bool GetAchievement(const char *name, bool *achieved) = 0;
             virtual bool SR_SetAchievement(const char* name) = 0;
             //virtual bool ClearAchievement(const char *name) = 0;
