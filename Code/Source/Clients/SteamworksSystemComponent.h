@@ -71,11 +71,6 @@ namespace Steamworks
         ISteamUserStats* m_pSteamUserStats;
         ISteamFriends* m_pSteamFriends;
 
-        // SteamworksRequestBus::Handler interface implementation
-        
-        // SteamUserStatsRequestBus::Handler interface implementation
-
-        bool SR_RequestCurrentStats() override;
         //bool GetAchievement(const char* name, bool* achieved) override;
         bool SR_SetAchievement(const char* name) override;
         //bool ClearAchievement(const char* name) override;
