@@ -87,7 +87,6 @@ namespace Steamworks
             behaviorContext->EBus<SteamUserStatsRequestBus>("SteamUserStats Requests")
                 ->Attribute(AZ::Script::Attributes::Category, "Steamworks/Steam User Stats")
                 ->Attribute(AZ::Script::Attributes::Scope, AZ::Script::Attributes::ScopeFlags::Common)
-                ->Event("RequestCurrentStats", &SteamUserStatsRequestBus::Events::SR_RequestCurrentStats)
                 ->Event("SetAchievement", &SteamUserStatsRequestBus::Events::SR_SetAchievement)
                 ->Event("SteamInitialized", &SteamUserStatsRequestBus::Events::SR_SteamInitialized);
 
@@ -169,7 +168,6 @@ namespace Steamworks
             m_pSteamUser = SteamUser();
             m_pSteamUserStats = SteamUserStats();
             m_pSteamFriends = SteamFriends();
-            SteamworksSystemComponent::SR_RequestCurrentStats();
         }
 #ifdef _RELEASE
         // Checks for steam client and initializes steam API - only in release builds
@@ -193,16 +191,6 @@ namespace Steamworks
         if (steamAPIInitialized) {
 			SteamAPI_Shutdown();
 		}
-    }
-
-    bool SteamworksSystemComponent::SR_RequestCurrentStats() {
-        if (m_pSteamUserStats == NULL || m_pSteamUser == NULL) {
-            return false;
-        }
-        if (!m_pSteamUser->BLoggedOn()) {
-            return false;
-        }
-        return m_pSteamUserStats->RequestCurrentStats();
     }
 
     bool SteamworksSystemComponent::SR_SetAchievement(const char* name)  {
